@@ -1,10 +1,13 @@
 "use client";
 
 import { SectionCard } from "@/components/shared/layout/SectionCard";
+import Input from "@/components/shared/input/Input";
 import type { VideoPlayerState } from "../types";
 
 type Props = { state: VideoPlayerState; update: <K extends keyof VideoPlayerState>(key: K, value: VideoPlayerState[K]) => void };
 
 export default function ContentSection({ state, update }: Props) {
-  return <SectionCard title="Content" subtitle="Content controls for native video generation."><div className="rounded-2xl border p-4 text-sm" style={{ borderColor: "var(--border)", color: "var(--muted)" }}>No separate native controls are needed for this section in this component.</div></SectionCard>;
+  return <SectionCard title="Content" subtitle="Native video source, poster, and caption copy."><Input label="Video source URL" value={state.src} placeholder="https://example.com/trailer.mp4" onChange={(value) => update("src", value)} />
+<Input label="Poster image URL" value={state.poster} placeholder="https://example.com/poster.jpg" onChange={(value) => update("poster", value)} />
+<Input label="Caption label" value={state.label} onChange={(value) => update("label", value)} /></SectionCard>;
 }
