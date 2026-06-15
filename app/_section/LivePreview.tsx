@@ -23,7 +23,7 @@ function buildRadius(state: { radiusLinked: boolean; radius: number; radiusTL: n
 }
 
 function shell(state: VideoPlayerState): CSSProperties {
-  return { width: state.width, minHeight: state.height, padding: state.padding, gap: state.gap, borderRadius: buildRadius(state), border: `${state.borderWidth}px ${state.borderStyle} ${state.border}`, boxShadow: buildShadow(state), background: state.background, color: state.foreground, fontFamily: resolveFont(state),
+  return { width: state.width, minHeight: state.height, padding: state.padding, gap: state.gap, borderRadius: buildRadius(state), border: `${state.borderWidth}px ${state.borderStyle} ${state.disabled && state.disabledUseCustomColors ? state.disabledBorder : state.border}`, boxShadow: buildShadow(state), background: state.disabled && state.disabledUseCustomColors ? state.disabledBg : state.background, color: state.foreground, fontFamily: resolveFont(state),
     fontStyle: state.fontStyle,
     textTransform: state.textTransform,
     textDecoration: state.textDecoration,
@@ -47,7 +47,7 @@ export default function LivePreview({ state }: { state: VideoPlayerState }) {
       <h3 style={{ fontSize: state.titleSize, fontWeight: state.fontWeight }}>{state.title}</h3>
       <p style={{ color: "color-mix(in oklab, currentColor 70%, transparent)", fontSize: state.bodySize }}>{state.description}</p>
     </div>
-    <div className="overflow-hidden rounded-2xl border" style={{ borderColor: state.border, background: "#020617" }}>
+    <div className="overflow-hidden rounded-2xl border" style={{ borderColor: state.border, background: state.actionText }}>
       <video controls src={state.src || undefined} poster={state.poster || undefined} muted={state.muted} loop={state.loop} autoPlay={state.autoplay} preload={state.preload} aria-label={state.ariaLabel} className="block w-full" style={{ aspectRatio: "16 / 9", objectFit: state.objectFit as CSSProperties["objectFit"], accentColor: state.accent }}>
         {state.showCaptions && <track kind="captions" srcLang="en" label={state.label || "English captions"} src={captionsSrc} default />}
       </video>
